@@ -4,41 +4,7 @@ var apiKeyLocation = '2a79a275b252f6434ea415eacc240938'  //location
 //https://positionstack.com/quickstart
 var apiLocation2 = 'pk.6d18291442dc98e3db6f70a9365ff4de'
 var searchForm = document.querySelector('#search');
-var searchHistory =[];
-
-var showSearchHistory = function(){
-    searchHistory = localStorage.getItem('searchHistory');
-    if(searchHistory == null){
-        console.log('going to the if');
-        searchHistory =  JSON.parse(localStorage.getItem('searchHistory'));
-
-    }
-    else{
-        console.log('going to the else');
-        localStorage.setItem('searchHistory',[]);
-
-        console.log(searchHistory)
-    }
-};
-
-var saveToHistory = function(city){
-    
-    searchHistory.push(city);
-    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-    var searchHistory = $('#searchHistory');
-    $(searchHistory).html('');
-    for(var i = 0;i < searchHistory.length;i++){
-        var div = document.createElement('div');
-        var button = document.createElement('button');
-        button.classList = 'btn btn-secondary';
-        button.textContent = searchHistory[i];
-        button.setAttribute('data-city',city);
-        div.classList= 'historyBtn';
-        div.appendChild(button);
-        $(searchHistory).append(div);
-    }
-    
-}
+var searchHistory = [];
 
 var daysForcasr = function(data){
     console.log(data);
@@ -58,15 +24,16 @@ var daysForcasr = function(data){
         if(mm<10) {
             mm='0'+mm;
         }
+
         
-        var card = $('<div>').addClass('card').attr('style','width:20%;')
+        var card = $('<div>').addClass('card text-white bg-secondary').attr('style','width:20%;')
         var cardHeader = $('<div>').addClass('card-header').text(`${dd}/${mm}/${yyyy}`);
         var icon = `https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png`
         var img = $('<img>').attr('src',icon);
         var cardTable = $('<ul>').addClass('list-group list-group-flush').html(` 
-        <li class="list-group-item">Temp : H${data.daily[i].temp.min} L${data.daily[i].temp.max}</li>
+        <li class="list-group-item">Temp : L:${Math.floor(data.daily[i].temp.min)}&deg H:${Math.floor(data.daily[i].temp.max)}	&deg</li>
         <li class="list-group-item">Wind : ${data.daily[i].wind_speed}</li>
-        <li class="list-group-item">humidity : ${data.daily[i].humidity}</li>`);
+        <li class="list-group-item">Humidity : ${data.daily[i].humidity}%</li>`);
         $(card).append(cardHeader);
         $(card).append(img);
         $(card).append(cardTable);
@@ -96,7 +63,7 @@ var getWeather = function(lat,lon,city){
                     mm='0'+mm;
                 }
                 var div = document.createElement('div');
-                div.innerHTML = `<p>Temp : ${currentTemp} C</p> <p>Wind:${windSpeed} KM/h</p><p>Humidity : ${humidity}%</p><p>UV Index : <span id='uvIndex'>${uvIndex}</span></p>`;
+                div.innerHTML = `<p>Temp : ${Math.floor(currentTemp)}&deg C</p> <p>Wind : ${windSpeed} KM/h</p><p>Humidity : ${humidity}%</p><p>UV Index : <span id='uvIndex'>${uvIndex}</span></p>`;
                 var icon = document.createElement('img');
                 icon.setAttribute('src', `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`);
                 var currentDiv = document.querySelector('#current');
@@ -140,6 +107,47 @@ var searchForAddress = function(city){
             alert('no good:'+ response);
         };
     })
+}
+
+var showSearchHistory = function(){
+    console.log("now I'm Here");
+    var temp = localStorage.getItem('searchHistory');
+    if(temp === null){
+        console.log('going to the if');
+        localStorage.setItem('searchHistory','[]');
+    }    
+    else{
+        temp = JSON.parse(localStorage.getItem('searchHistory'));
+        searchHistory = temp;
+        console.log(searchHistory);
+        document.querySelector('#searchHistory').innerHTML = '';
+        for(var i = 0; i < searchHistory.length; i++){
+            var btn = document.createElement('button');
+            btn.classList = 'btn btn-secondary btn-lg btn-block';
+            btn.textContent = searchHistory[i];
+            btn.setAttribute('type','button');
+            btn.setAttribute('data-city',searchHistory[i]);
+            var div = document.createElement('div');
+            div.classList = 'col-12';
+            div.appendChild(btn);
+            document.querySelector('#searchHistory').appendChild(div);
+        }
+    }
+
+    
+}
+var saveToHistory = function(city){
+    console.log("I'm herer", city);
+    if(!searchHistory.includes(city)){
+        searchHistory.push(city);
+        localStorage.setItem('searchHistory',JSON.stringify(searchHistory));
+        showSearchHistory();
+    }
+    else{
+        console.log('you alredy have this city in the search');
+    }
+
+
 }
 searchForm.addEventListener('submit',function(event){
     event.preventDefault();

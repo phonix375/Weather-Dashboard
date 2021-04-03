@@ -48,3 +48,16 @@ body, html {
     padding-left: 10px;
     padding-right: 10px;
   }
+
+  .btn{
+    margin-top: 15px;
+    width: 100%;
+  }
+
+  #searchHistory div{
+    background-color: white;
+  }
+  img{
+    height: 40px;
+    width: 40px;
+  }
