@@ -29,7 +29,7 @@ var daysForcasr = function(data){
         
         var card = $('<div>').addClass('card').attr('style','width:20%;')
         var cardHeader = $('<div>').addClass('card-header').text(`${dd}/${mm}/${yyyy}`);
-        var icon = `http://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png`
+        var icon = `https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png`
         var img = $('<img>').attr('src',icon);
         var cardTable = $('<ul>').addClass('list-group list-group-flush').html(` 
         <li class="list-group-item">Temp : H${data.daily[i].temp.min} L${data.daily[i].temp.max}</li>
@@ -43,7 +43,7 @@ var daysForcasr = function(data){
 }
 
 var getWeather = function(lat,lon,city){
-    fetch(`http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKeyWeather}&units=metric`).then(function(response){
+    fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKeyWeather}&units=metric`).then(function(response){
         if(response.ok){
             response.json().then(function(data){
                 var currentTemp = data.current.temp;
