@@ -22,3 +22,10 @@ body, html {
   .sideBar{
       background-color: white;
   }
+  #current{
+    border: solid black 1px  ;
+  }
+
+  .historyBtn{
+    margin-top: 20px;
+  }
