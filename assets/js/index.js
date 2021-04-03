@@ -41,6 +41,7 @@ var daysForcasr = function(data){
     }
 }
 
+//gets the current weather in location
 var getWeather = function(lat,lon,city){
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKeyWeather}&units=metric`).then(function(response){
         if(response.ok){
@@ -87,11 +88,12 @@ var getWeather = function(lat,lon,city){
 
             })
         }else{
-            alert('no good' + response);
+            alert("Sorry, we didn't find the city you searching for. Please try again");
         }
     })
 }
 
+//return the cardinals from city name 
 var searchForAddress = function(city){
     fetch(`https://us1.locationiq.com/v1/search.php?key=${apiLocation2}&q=${city}&limit=1&accept-language=&format=json`).then(function(response){
         if(response.ok){
@@ -109,6 +111,7 @@ var searchForAddress = function(city){
     })
 }
 
+//check to see if there is a search history when entering the app, and updates the list
 var showSearchHistory = function(){
     console.log("now I'm Here");
     var temp = localStorage.getItem('searchHistory');
@@ -136,6 +139,8 @@ var showSearchHistory = function(){
 
     
 }
+
+//save the search history to the local storage
 var saveToHistory = function(city){
     console.log("I'm herer", city);
     if(!searchHistory.includes(city)){
@@ -154,34 +159,10 @@ searchForm.addEventListener('submit',function(event){
     searchForAddress(document.querySelector('#CityForSearch').value);
 })
 
+//click handler for the search history menu
 document.querySelector('#searchHistory').addEventListener('click', function(event){
     var clickOn = event.target.dataset.city;
     searchForAddress(clickOn);
 });
 
 showSearchHistory();
-
-
-
-/*
-recurces : 
-weather api docs : 
-https://openweathermap.org/api/one-call-api
-
-test call to wwather api 
-https://api.openweathermap.org/data/2.5/onecall?lat=32.066455&lon=34.783553&appid=1e40570c5898e87049be7d53d8cf71ad&units=metric
-
-position documentation : 
-https://positionstack.com/documentation
-quick start guid 
-https://positionstack.com/quickstart
-
-test api call to  location api :
-http://api.positionstack.com/v1/forward?access_key=2a79a275b252f6434ea415eacc240938&query=toronto
-http://api.positionstack.com/v1/forward?access_key=2a79a275b252f6434ea415eacc240938&query=ramat%20gan
-
-
-
-
-
-*/
