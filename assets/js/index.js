@@ -26,7 +26,7 @@ var daysForcasr = function(data){
         }
 
         
-        var card = $('<div>').addClass('card text-white bg-secondary').attr('style','width:20%;')
+        var card = $('<div>').addClass('card text-white bg-secondary col-sm-12 col-lg-2')
         var cardHeader = $('<div>').addClass('card-header').text(`${dd}/${mm}/${yyyy}`);
         var icon = `https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png`
         var img = $('<img>').attr('src',icon);
