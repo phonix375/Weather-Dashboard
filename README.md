@@ -9,7 +9,9 @@ after a search show city name, date, current conditions including temperature, h
 
 
 view future weather conditions for that city, 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
+![alt text](https://github.com/phonix375/Weather-Dashboard/blob/main/assets/photos/3.PNG?raw=true)
 
 
 
 Click the search history to see the current conditions in this city
+![alt text](https://github.com/phonix375/Weather-Dashboard/blob/main/assets/photos/4.gif?raw=true)
