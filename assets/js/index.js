@@ -4,28 +4,40 @@ var apiKeyLocation = '2a79a275b252f6434ea415eacc240938'  //location
 //https://positionstack.com/quickstart
 var apiLocation2 = 'pk.6d18291442dc98e3db6f70a9365ff4de'
 var searchForm = document.querySelector('#search');
+var searchHistory =[];
 
 var showSearchHistory = function(){
-    localStorage.getItem('searchHistory');
-    if(!localStorage){
-        localStorage.setItem('searchHistory',[]);
+    searchHistory = localStorage.getItem('searchHistory');
+    if(searchHistory == null){
+        console.log('going to the if');
+        searchHistory =  JSON.parse(localStorage.getItem('searchHistory'));
+
     }
     else{
-        var searchHistory =  JSON.parse(localStorage.getItem('searchHistory'));
+        console.log('going to the else');
+        localStorage.setItem('searchHistory',[]);
+
         console.log(searchHistory)
     }
 };
 
 var saveToHistory = function(city){
+    
+    searchHistory.push(city);
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
     var searchHistory = $('#searchHistory');
-    var div = document.createElement('div');
-    var button = document.createElement('button');
-    button.classList = 'btn btn-secondary';
-    button.textContent = city;
-    button.setAttribute('data-city',city);
-    div.classList= 'historyBtn';
-    div.appendChild(button);
-    $(searchHistory).append(div);
+    $(searchHistory).html('');
+    for(var i = 0;i < searchHistory.length;i++){
+        var div = document.createElement('div');
+        var button = document.createElement('button');
+        button.classList = 'btn btn-secondary';
+        button.textContent = searchHistory[i];
+        button.setAttribute('data-city',city);
+        div.classList= 'historyBtn';
+        div.appendChild(button);
+        $(searchHistory).append(div);
+    }
+    
 }
 
 var daysForcasr = function(data){
