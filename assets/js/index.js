@@ -11,7 +11,7 @@ var getWeather = function(lat,lon,city){
                 console.log(data);
                 var currentTemp = data.current.temp;
                 var humidity = data.current.humidity;
-                
+
                 var windSpeed = data.current.wind_speed;
                 var uvIndex = data.current.uvi;
                 var unixTimestamp =  data.current.dt;
@@ -54,3 +54,29 @@ searchForm.addEventListener('submit',function(event){
     event.preventDefault();
     searchForAddress(document.querySelector('#CityForSearch').value);
 })
+
+
+
+
+/*
+recurces : 
+weather api docs : 
+https://openweathermap.org/api/one-call-api
+
+test call to wwather api 
+https://api.openweathermap.org/data/2.5/onecall?lat=32.066455&lon=34.783553&appid=1e40570c5898e87049be7d53d8cf71ad&units=metric
+
+position documentation : 
+https://positionstack.com/documentation
+quick start guid 
+https://positionstack.com/quickstart
+
+test api call to  location api :
+http://api.positionstack.com/v1/forward?access_key=2a79a275b252f6434ea415eacc240938&query=toronto
+http://api.positionstack.com/v1/forward?access_key=2a79a275b252f6434ea415eacc240938&query=ramat%20gan
+
+
+
+
+
+*/
