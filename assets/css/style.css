@@ -29,3 +29,22 @@ body, html {
   .historyBtn{
     margin-top: 20px;
   }
+  .green{
+    background-color: green;
+    border-radius: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+  }
+  .yellow{
+    background-color: yellow;
+    border-radius: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .red{
+    background-color: red;
+    border-radius: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }

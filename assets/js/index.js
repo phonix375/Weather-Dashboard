@@ -2,11 +2,31 @@ var apiKeyWeather = '1e40570c5898e87049be7d53d8cf71ad'  // Weather
 //https://openweathermap.org/api/one-call-api
 var apiKeyLocation = '2a79a275b252f6434ea415eacc240938'  //location
 //https://positionstack.com/quickstart
-
-
 var apiLocation2 = 'pk.6d18291442dc98e3db6f70a9365ff4de'
 var searchForm = document.querySelector('#search');
 
+var showSearchHistory = function(){
+    localStorage.getItem('searchHistory');
+    if(!localStorage){
+        localStorage.setItem('searchHistory',[]);
+    }
+    else{
+        var searchHistory =  JSON.parse(localStorage.getItem('searchHistory'));
+        console.log(searchHistory)
+    }
+};
+
+var saveToHistory = function(city){
+    var searchHistory = $('#searchHistory');
+    var div = document.createElement('div');
+    var button = document.createElement('button');
+    button.classList = 'btn btn-secondary';
+    button.textContent = city;
+    button.setAttribute('data-city',city);
+    div.classList= 'historyBtn';
+    div.appendChild(button);
+    $(searchHistory).append(div);
+}
 
 var daysForcasr = function(data){
     console.log(data);
@@ -64,7 +84,7 @@ var getWeather = function(lat,lon,city){
                     mm='0'+mm;
                 }
                 var div = document.createElement('div');
-                div.innerHTML = `<p>Temp : ${currentTemp} C</p> <p>Wind:${windSpeed} KM/h</p><p>Humidity : ${humidity}%</p><p>UV Index : ${uvIndex}</p>`;
+                div.innerHTML = `<p>Temp : ${currentTemp} C</p> <p>Wind:${windSpeed} KM/h</p><p>Humidity : ${humidity}%</p><p>UV Index : <span id='uvIndex'>${uvIndex}</span></p>`;
                 var icon = document.createElement('img');
                 icon.setAttribute('src', `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`);
                 var currentDiv = document.querySelector('#current');
@@ -74,9 +94,17 @@ var getWeather = function(lat,lon,city){
                 h1.append(icon);
                 currentDiv.appendChild(h1);
                 currentDiv.appendChild(div);
-                
                 currentDiv.appendChild(div);
                 daysForcasr(data);
+                if(uvIndex <= 2){
+                    document.querySelector('#uvIndex').setAttribute('class','green');
+                }
+                else if(uvIndex <= 6){
+                    document.querySelector('#uvIndex').setAttribute('class','yellow');
+                }
+                else{
+                    document.querySelector('#uvIndex').setAttribute('class','red');
+                }
 
             })
         }else{
@@ -84,17 +112,7 @@ var getWeather = function(lat,lon,city){
         }
     })
 }
-var saveToHistory = function(city){
-    var searchHistory = $('#searchHistory');
-    var div = document.createElement('div');
-    var button = document.createElement('button');
-    button.classList = 'btn btn-secondary';
-    button.textContent = city;
-    button.setAttribute('data-city',city);
-    div.classList= 'historyBtn';
-    div.appendChild(button);
-    $(searchHistory).append(div);
-}
+
 var searchForAddress = function(city){
     fetch(`https://us1.locationiq.com/v1/search.php?key=${apiLocation2}&q=${city}&limit=1&accept-language=&format=json`).then(function(response){
         if(response.ok){
@@ -121,6 +139,7 @@ document.querySelector('#searchHistory').addEventListener('click', function(even
     searchForAddress(clickOn);
 });
 
+showSearchHistory();
 
 
 
